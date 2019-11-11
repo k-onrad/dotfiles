@@ -1,0 +1,28 @@
+{
+    "wallpaper": "/home/bl4nk/.config/wpg/wallpapers/archgreen.jpg",
+    "alpha": "100",
+
+    "special": {
+        "background": "#101f1e",
+        "foreground": "#fffbfc",
+        "cursor": "#fffbfc"
+    },
+    "colors": {
+        "color0": "#101f1e",
+        "color1": "#87857B",
+        "color2": "#C7BAB7",
+        "color3": "#C1AE9D",
+        "color4": "#CDC1BE",
+        "color5": "#B9AEAB",
+        "color6": "#938F8A",
+        "color7": "#dcd6d7",
+        "color8": "#20403e",
+        "color9": "#c0b88f",
+        "color10": "#ffe2d5",
+        "color11": "#ffe0b5",
+        "color12": "#ffe9db",
+        "color13": "#ffd5c7",
+        "color14": "#d1bba0",
+        "color15": "#fffbfc"
+    }
+}
