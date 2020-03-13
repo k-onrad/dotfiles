@@ -52,7 +52,7 @@ set $ws8 8:music
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id setxkbmap -layout us -variant intl
 exec_always --no-startup-id sh $HOME/.config/wpg/wp_init.sh; sleep 1; compton -b
-exec_always --no-startup-id fish -c 'env MONITOR="eDP-1-1" polybar top-main'
+exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id sh $HOME/.config/pulseaudio/init.sh

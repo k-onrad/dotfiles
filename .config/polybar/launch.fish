@@ -12,9 +12,8 @@ function launch_bar
         fish -c 'env MONITOR=$argv[1] polybar $argv[2]'
 end
 
-for screen in (xrandr --query | rg -w connected)
-	set output (string split -m 1 " " $screen)[1]
-  	printf "Found output: %s\n" $output
+for screen in (xrandr --query | rg -w connected | cut -f 1 -d " ")
+  	printf "Found output: %s\n" $screen
 	switch $screen
 		case (string match '*primary*' $screen)
 			launch_bar $output top-main
