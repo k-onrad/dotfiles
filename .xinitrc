@@ -4,8 +4,8 @@
 #
 # Executed by startx (run your window manager from here)
 
-xrandr --setprovideroutputsource modesetting NVIDIA-0
-xrandr --output "eDP-1-1" --auto --primary --output "HDMI-1-2" --right-of "eDP-1-1" --auto
+# At home PC
+# xrandr --setprovideroutputsource modesetting NVIDIA-0
 
 userresources=$HOME/.Xresources
 userkeyboard=$HOME/.Xkeyboard
