@@ -1,7 +1,7 @@
 #!/usr/bin/fish
 
 # Terminate already running bar instances
-killall -q polybar
+killall -q -w polybar
 
 # Wait until the processes have been shut down
 while pgrep -U 1000 -x polybar >/dev/null

@@ -31,20 +31,6 @@ set $gaps_resize 4
 ## SET-VOL
 set $volume_change 5
 
-## SET-COLORS
-set_from_resource $bg		background
-set_from_resource $fg		foreground
-set_from_resource $color1	color1
-set_from_resource $color4     	color4 # creamish white
-set_from_resource $color8	color8 # dark green
-set_from_resource $color9	color9 # light greenish yellow
-### Class                 	Border  Backgr. Text  	Indicator Border
-client.focused        		$color1 $color1	$fg 	$color4	$color4
-client.focused_inactive 	$color1 $bg     $fg     $color4	$color8
-client.unfocused        	$color1 $bg 	$fg 	$color4	$color8
-client.urgent           	$bg 	$bg 	$fg 	$color4	$color9
-client.placeholder      	$bg 	$bg 	$fg 	$color4	$bg
-client.background       	$bg
 
 ## SET-WORKSPACES
 ### Define workspace labels
@@ -63,14 +49,14 @@ set $ws8 8:music
 # STARTUP #
 ###########
 ### Start nice programs
-exec --no-startup-id pulseaudio --kill; sleep 1; pulseaudio -D
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id setxkbmap -layout us -variant intl
-exec_always --no-startup-id sh ~/.config/wpg/wp_init.sh; sleep 1; compton -b
-exec_always  --no-startup-id fish $HOME/.config/polybar/launch.sh
+exec_always --no-startup-id sh $HOME/.config/wpg/wp_init.sh; sleep 1; compton -b
+exec_always --no-startup-id fish -c 'env MONITOR="eDP-1-1" polybar top-main'
 exec --no-startup-id xautolock -time 10 -locker blurlock
 exec_always --no-startup-id fix_xcursor
-
+exec_always --no-startup-id sh $HOME/.config/pulseaudio/init.sh
+exec_always --no-startup-id nm-applet
 
 
 ########
@@ -186,8 +172,8 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+9 exec --no-startup-id blurlock
 
 ## BIND-FNKEYS
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10; notify-send "brightness up"
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10; notify-send "brightness down"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; exec notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; exec notify-send 'brightness down'"
 
 ## BIND-WINDOW
 bindsym $mod+f fullscreen toggle
@@ -297,3 +283,24 @@ mode "$mode_gaps" {
 	bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
+########
+#COLORS#
+########
+## SET-COLORS
+set_from_resource $bg		background
+set_from_resource $fg		foreground
+set_from_resource $color1	color1
+##### creamish white
+set_from_resource $color4     	color4
+##### dark green
+set_from_resource $color8	color8
+#####light greenish yellow
+set_from_resource $color9	color9
+### Class                 	Border  Backgr. Text  	Indicator Border
+client.focused        		$color1 $color1	$fg 	$color4	$color4
+client.focused_inactive 	$color1 $bg     $fg     $color4	$color8
+client.unfocused        	$color1 $bg 	$fg 	$color4	$color8
+client.urgent           	$bg 	$bg 	$fg 	$color4	$color9
+client.placeholder      	$bg 	$bg 	$fg 	$color4	$bg
+client.background       	$bg
