@@ -21,7 +21,7 @@ set $browser firefox
 set $editor nvim
 
 ## SET-WINDOWS
-set $window_border 2
+set $window_border 1
 set $scratchpad_border 4
 set $scratchpad_size 960 540
 
@@ -30,7 +30,6 @@ set $gaps_resize 4
 
 ## SET-VOL
 set $volume_change 5
-
 
 ## SET-WORKSPACES
 ### Define workspace labels
@@ -44,7 +43,6 @@ set $ws7 7:video
 set $ws8 8:music
 
 
-
 ###########
 # STARTUP #
 ###########
@@ -54,6 +52,7 @@ exec --no-startup-id setxkbmap -layout us -variant intl
 exec_always --no-startup-id sh $HOME/.config/wpg/wp_init.sh; sleep 1; compton -b
 exec_always --no-startup-id sh $HOME/.config/polybar/launch.sh
 exec --no-startup-id xautolock -time 10 -locker blurlock
+exec_always --no-startup-id redshift
 exec_always --no-startup-id fix_xcursor
 exec_always --no-startup-id sh $HOME/.config/pulseaudio/init.sh
 exec_always --no-startup-id nm-applet
@@ -67,7 +66,6 @@ gaps outer 5
 # smart_gaps inverse_outer
 # smart_borders on
 for_window [class="^.*"] border pixel $window_border
-
 
 
 ###########
@@ -110,7 +108,6 @@ for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
-
 
 
 ############
@@ -172,8 +169,8 @@ bindsym $mod+Ctrl+x --release exec --no-startup-id xkill
 bindsym $mod+9 exec --no-startup-id blurlock
 
 ## BIND-FNKEYS
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 10; exec notify-send 'brightness up'"
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 10; exec notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec --no-startup-id "sh $HOME/Scripts/inc_backlight.sh; exec notify-send 'brightness up'"
+bindsym XF86MonBrightnessDown exec --no-startup-id "sh $HOME/Scripts/dec_backlight.sh; exec notify-send 'brightness down'"
 
 ## BIND-WINDOW
 bindsym $mod+f fullscreen toggle
@@ -217,7 +214,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 ### Exit i3 (logs out of X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
 
 
 #########
@@ -283,6 +279,7 @@ mode "$mode_gaps" {
 	bindsym Return mode "default"
         bindsym Escape mode "default"
 }
+
 
 ########
 #COLORS#

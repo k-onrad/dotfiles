@@ -1,18 +1,30 @@
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'dylanaraps/wal.vim'
-Plug 'Shougo/defx.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'dense-analysis/ale'
+" Core
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'junegunn/fzf.vim'
+Plug 'dyng/ctrlsf.vim'
+Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'dense-analysis/ale'
+
+Plug 'deoplete-plugins/deoplete-go', { 'do': 'make'}
 Plug 'deoplete-plugins/deoplete-jedi'
+Plug 'racer-rust/vim-racer'
+
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'ianks/vim-tsx'
+Plug 'leafOfTree/vim-svelte-plugin'
+
+Plug 'dylanaraps/wal.vim'
 Plug 'vim-airline/vim-airline'
+
 Plug 'jiangmiao/auto-pairs'
 Plug 'othree/html5.vim'
 Plug  'Glench/Vim-Jinja2-Syntax'
 Plug 'jvirtanen/vim-octave'
-Plug 'evanleck/vim-svelte'
-Plug 'junegunn/fzf.vim'
-Plug 'dyng/ctrlsf.vim'
 
 call plug#end()
 
@@ -21,6 +33,9 @@ colorscheme wal
 
 " Show line numbers
 set number
+
+" Set hidden mode for buffers
+set hidden
 
 " Mapping fzf to ctrl+p
 nnoremap <C-p> :FZF <CR>
@@ -49,25 +64,26 @@ set runtimepath+=~/.local/share/nvim/plugged/deoplete.nvim/
 " Start deoplete
 let g:deoplete#enable_at_startup = 1
 
-" Use ALE as completion source
-call deoplete#custom#option('sources', { '_': ['ale', 'jedi'] })
-
 " Set this. Airline will handle the rest.
 let g:airline#extensions#ale#enabled = 1
 
+" Rust completions with complete signature
+let g:racer_experimental_completer = 1
 " Set auto pipenv
-let g:ale_python_auto_pipenv = 1
+" let g:ale_python_auto_pipenv = 1
 
 " Set pynvim host
 let g:python3_host_prog = '/home/bl4nk/.cache/virtualfish/nvim/bin/python'
 
-" Flake8 ignore line length (E501)
-let g:ale_python_flake8_options = "--ignore=E501"
+" Turn off ALE autocompletion
+let g:ale_completion_enabled = 0
 
 " ALE linters
 let g:ale_linters = {
 \	'rust': ['rls'],
-\	'javascript': ['standard', 'eslint'],
+\	'javascript': ['eslint', 'tsserver'],
+\       'typescript': ['eslint','tsserver'],
+\       'svelte': ['eslint', 'tsserver'],
 \	'python': ['flake8', 'mypy'],
 \}
 
@@ -75,9 +91,14 @@ let g:ale_linters = {
 let g:ale_fixers = {
 \   	'*': ['remove_trailing_lines', 'trim_whitespace'],
 \   	'rust': ['rustfmt'],
-\	'python': ['autopep8', 'black'],
+\       'javascript': ['eslint'],
+\       'typescript': ['eslint'],
+\       'svelte': ['eslint'],
+\	'python': ['black', 'autopep8'],
 \}
-"	'javascript': ['standard', 'eslint'],
+
+" Set ale to use global executables
+" let g:ale_use_global_executables = 1
 
 " Fix files on save
 let g:ale_fix_on_save = 1
@@ -91,5 +112,16 @@ let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
 set splitright|set splitbelow
 
 " Svelte indentation
-let g:svelte_indent_script = 0
-let g:svelte_indent_style = 0
+" let g:svelte_indent_script = 0
+" let g:svelte_indent_style = 0
+let g:vim_svelte_plugin_load_full_syntax = 1
+
+" gitgutter icons
+let g:gitgutter_sign_added = '✚'
+let g:gitgutter_sign_modified = '✹'
+let g:gitgutter_sign_removed = '-'
+let g:gitgutter_sign_removed_first_line = '-'
+let g:gitgutter_sign_modified_removed = '-'
+
+" let tsserver lint javascript
+let g:nvim_typescript#javascript_support = 1
