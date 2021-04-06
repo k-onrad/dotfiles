@@ -1,23 +1,20 @@
 #!/usr/bin/fish
-
-# Terminate already running bar instances
-killall -qw polybar
-
-# Wait until the processes have been shut down
-while pgrep -U 1000 -x polybar >/dev/null
-	sleep 1
-end
-
 function launch_bar
-        fish -c "env MONITOR=HDMI1 polybar top-main"
+  env MONITOR=$argv[1] polybar --reload $argv[2] &
 end
 
-for screen in (xrandr --query | rg -w connected | cut -f 1 -d " ")
-  	printf "Found screen: %s\n" $screen
-	switch $screen
-		case (string match 'eDP1' $screen)
-			launch_bar
-		case *
-			launch_bar $screen top-secondary
-	end
+set QUERY (xrandr --query | rg -w connected | cut -f 1 -d " ")
+
+for SCREEN in $QUERY
+  printf "Found screen: %s\n" $SCREEN
+  switch $SCREEN
+    case eDP1
+      if contains HDMI1 $QUERY
+        launch_bar $SCREEN top-secondary
+      else
+        launch_bar $SCREEN top-main
+      end
+    case '*'
+      launch_bar $SCREEN top-main
+  end
 end

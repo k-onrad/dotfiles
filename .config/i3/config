@@ -21,8 +21,8 @@ set $browser firefox
 set $editor nvim
 
 ## SET-WINDOWS
-set $window_border 2
-set $scratchpad_border 4
+set $window_border 0
+set $scratchpad_border 0
 set $scratchpad_size 960 540
 
 ## SET-GAPS
@@ -42,21 +42,19 @@ set $ws6 6:docs
 set $ws7 7:video
 set $ws8 8:music
 
-
 ###########
 # STARTUP #
 ###########
 ### Start nice programs
-exec_always --no-startup-id sh ~/.config/wpg/wp_init.sh; sleep 1; picom -b
-exec_always --no-startup-id pulseaudio --kill; sleep 1; pulseaudio -D
-exec_always  --no-startup-id fish $HOME/.config/polybar/launch.fish
-exec_always --no-startup-id killall nm-applet; sleep 1; nm-applet
-exec_always --no-startup-id killall pasystray; sleep 1; pasystray
+exec_always --no-startup-id sh ~/.config/wpg/wp_init.sh; sleep 1; pkill picom; sleep 1; picom -b
+exec_always --no-startup-id killall polybar; sleep 1; fish $HOME/.config/polybar/launch.fish
+exec_always --no-startup-id killall pulseaudio; sleep 1; pulseaudio -D
+exec --no-startup-id redshift -l 27.63:48.50 -m vidmode
+exec --no-startup-id nm-applet
+exec --no-startup-id pasystray
 exec --no-startup-id xautolock -time 10 -locker blurlock
-exec_always --no-startup-id fix_xcursor
+exec --no-startup-id fix_xcursor
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec_always --no-startup-id redshift
-
 
 ########
 # GAPS #
@@ -66,7 +64,6 @@ gaps outer 5
 smart_gaps inverse_outer
 smart_borders on
 for_window [class="^.*"] border pixel $window_border
-
 
 ###########
 # ASSIGNS #
@@ -108,7 +105,6 @@ for_window [class="Skype"] floating enable border normal
 for_window [class="Timeset-gui"] floating enable border normal
 for_window [class="(?i)virtualbox"] floating enable border normal
 for_window [class="Xfburn"] floating enable
-
 
 ############
 # BINDINGS #
@@ -214,8 +210,6 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 ### Exit i3 (logs out of X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
-
-
 
 #########
 # MODES #

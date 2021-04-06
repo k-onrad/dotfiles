@@ -20,7 +20,6 @@ urgent = ${xcolors.color9}
 secondary = ${xcolors.color8}
 
 [bar/base]
-monitor = ${env:MONITOR}
 width = 100%
 height = 25
 fixed-center = true
@@ -38,6 +37,7 @@ font-1 = FuraCode Nerd Font:size=11:style=Medium
 font-2 = FuraCode Nerd Font:size=16:style=Medium
 
 [bar/top-main]
+monitor = ${env:MONITOR:}
 inherit = bar/base
 
 modules-left = i3
@@ -50,16 +50,9 @@ tray-position = right
 tray-padding = 2
 
 [bar/top-secondary]
+monitor = ${env:MONITOR:}
 inherit = bar/base
-
-modules-left = i3
 modules-center = date
-modules-right = filesystem xkeyboard memory cpu battery temperature
-
-module-margin = 1
-padding = 1
-tray-position = right
-tray-padding = 2
 
 [module/xwindow]
 type = internal/xwindow
